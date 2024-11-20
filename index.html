@@ -103,6 +103,19 @@
         .uploaded-link a:hover {
             text-decoration: underline;
         }
+
+        .uploaded-links-list {
+            margin-top: 20px;
+        }
+
+        .uploaded-links-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .uploaded-links-list li {
+            margin: 10px 0;
+        }
     </style>
 </head>
 
@@ -138,6 +151,11 @@
         <div class="uploaded-link" id="uploadedLink">
             <!-- Link yang di-upload akan muncul di sini -->
         </div>
+
+        <div class="uploaded-links-list" id="uploadedLinksList">
+            <h2>Daftar Video yang Telah Diupload:</h2>
+            <ul id="linksList"></ul>
+        </div>
     </main>
 
     <footer>
@@ -145,6 +163,34 @@
     </footer>
 
     <script>
+        // Menyimpan data ke localStorage
+        function saveToLocalStorage(studentName, studentClass, youtubeLink) {
+            const existingData = JSON.parse(localStorage.getItem('uploadedVideos')) || [];
+            existingData.push({
+                studentName,
+                studentClass,
+                youtubeLink
+            });
+            localStorage.setItem('uploadedVideos', JSON.stringify(existingData));
+        }
+
+        // Menampilkan data dari localStorage
+        function displayUploadedLinks() {
+            const storedData = JSON.parse(localStorage.getItem('uploadedVideos')) || [];
+            const linksList = document.getElementById('linksList');
+
+            storedData.forEach(data => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <strong>Nama:</strong> ${data.studentName} <br>
+                    <strong>Kelas:</strong> ${data.studentClass} <br>
+                    <strong>Link Video:</strong> <a href="${data.youtubeLink}" target="_blank">${data.youtubeLink}</a>
+                `;
+                linksList.appendChild(listItem);
+            });
+        }
+
+        // Fungsi submit form
         function handleSubmit() {
             const studentName = document.getElementById('studentName').value;
             const studentClass = document.getElementById('studentClass').value;
@@ -181,7 +227,16 @@
             linkElement.target = "_blank"; // Buka link di tab baru
             linkElement.textContent = `Klik untuk menonton video di YouTube: ${youtubeLink}`;
             uploadedLinkDiv.appendChild(linkElement);
+
+            // Simpan data ke localStorage
+            saveToLocalStorage(studentName, studentClass, youtubeLink);
+
+            // Tampilkan daftar video yang sudah diupload
+            displayUploadedLinks();
         }
+
+        // Tampilkan daftar video yang sudah diupload ketika halaman dimuat
+        window.onload = displayUploadedLinks;
     </script>
 </body>
 
