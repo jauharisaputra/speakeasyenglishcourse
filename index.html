@@ -1,51 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - SpeakEasy English Course</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Upload dan Tampilkan Video</title>
+    <style>
+        /* CSS khusus untuk halaman ini */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input,
+        form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+
+        #uploadResult {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3e7;
+            border: 1px solid #b5dbb5;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .student-info {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .uploaded-link {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #007BFF;
+        }
+
+        .uploaded-link a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .uploaded-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <div class="navbar">
-            <img src="img/logo.png" alt="SpeakEasy Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="courses.html">Courses</a></li>
-                    <li><a href="upload.html">Upload Video Tugas</a></li>
-                    <li><a href="https://surveyheart.com/form/665d288b3ffaf22f633808d0">Register</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="header-content">
-            <h1>Welcome to SpeakEasy English Course</h1>
-            <p>"Speak Freely, Speak Easy."</p>
-        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="upload.html">Upload Video</a>
+        </nav>
     </header>
+
     <main>
-        <section class="intro">
-            <h2>Why Choose Us?</h2>
-            <p>At SpeakEasy, we provide high-quality English courses designed to help you speak fluently and
-                confidently.</p>
-        </section>
-        <section>
-            <h2>Participants</h2>
-            <video width="500px" controls src="video/1.mp4">Introduction</video>
-            <video width="500px" controls src="video/2.mp4"></video>
-            <video width="160px" controls src="video/3.mp4"></video>
-            <video width="500px" controls src="video/4.mp4"></video>
-            <video width="160px" controls src="video/5.mp4"></video>
-        </section>
+        <h1>Upload dan Tampilkan Video</h1>
+        <form id="videoUploadForm">
+            <label for="studentName">Nama Siswa:</label>
+            <input type="text" id="studentName" placeholder="Masukkan nama siswa" required>
+
+            <label for="studentClass">Kelas:</label>
+            <input type="text" id="studentClass" placeholder="Masukkan kelas siswa" required>
+
+            <label for="youtubeLink">Link Video YouTube:</label>
+            <input type="url" id="youtubeLink" placeholder="Masukkan link video YouTube" required>
+
+            <button type="button" onclick="handleSubmit()">Submit</button>
+        </form>
+
+        <div id="uploadResult"></div>
+
+        <div class="student-info" id="studentInfo">
+            <!-- Informasi siswa yang mengupload akan muncul di sini -->
+        </div>
+
+        <div class="uploaded-link" id="uploadedLink">
+            <!-- Link yang di-upload akan muncul di sini -->
+        </div>
     </main>
+
     <footer>
-        <p>Contact us at: info@speakeasy.com | 123-456-7890</p>
-        <p>&copy; 2024 SpeakEasy English Course</p>
+        <p>© 2024 SpeakEasy English Course</p>
     </footer>
+
+    <script>
+        function handleSubmit() {
+            const studentName = document.getElementById('studentName').value;
+            const studentClass = document.getElementById('studentClass').value;
+            const youtubeLink = document.getElementById('youtubeLink').value;
+            const resultDiv = document.getElementById('uploadResult');
+            const uploadedLinkDiv = document.getElementById('uploadedLink');
+            const studentInfoDiv = document.getElementById('studentInfo');
+
+            // Reset hasil sebelumnya
+            resultDiv.style.display = "none";
+            uploadedLinkDiv.innerHTML = ""; // Clear uploaded link display
+            studentInfoDiv.innerHTML = ""; // Clear student info display
+
+            // Validasi apakah link YouTube benar
+            if (!youtubeLink.includes("youtube.com") && !youtubeLink.includes("youtu.be")) {
+                resultDiv.textContent = "Masukkan link YouTube yang valid.";
+                resultDiv.style.display = "block";
+                return;
+            }
+
+            // Tampilkan notifikasi sukses
+            resultDiv.textContent = `Link "${youtubeLink}" berhasil disimpan!`;
+            resultDiv.style.display = "block";
+
+            // Tampilkan informasi siswa yang mengupload
+            studentInfoDiv.innerHTML = `
+                <strong>Nama Siswa:</strong> ${studentName}<br>
+                <strong>Kelas:</strong> ${studentClass}
+            `;
+
+            // Tampilkan link YouTube yang di-upload agar bisa diklik
+            const linkElement = document.createElement('a');
+            linkElement.href = youtubeLink;
+            linkElement.target = "_blank"; // Buka link di tab baru
+            linkElement.textContent = `Klik untuk menonton video di YouTube: ${youtubeLink}`;
+            uploadedLinkDiv.appendChild(linkElement);
+        }
+    </script>
 </body>
 
 </html>
