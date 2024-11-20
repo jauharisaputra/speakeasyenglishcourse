@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+    <style>
+        /* CSS khusus untuk halaman ini */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        form input,
+        form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="upload.html">Upload Video</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Upload Video atau Link YouTube</h1>
+        <form id="videoUploadForm">
+            <label for="videoUpload">Upload Video:</label>
+            <input type="file" id="videoUpload" accept="video/*"><br><br>
+
+            <label for="youtubeLink">Link Video YouTube:</label>
+            <input type="url" id="youtubeLink" placeholder="Masukkan link video YouTube"><br><br>
+
+            <button type="button" onclick="handleSubmit()">Submit</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 SpeakEasy English Course</p>
+    </footer>
+
+    <script>
+        // JavaScript khusus untuk halaman ini
+        function handleSubmit() {
+            const videoFile = document.getElementById('videoUpload').files[0];
+            const youtubeLink = document.getElementById('youtubeLink').value;
+
+            if (videoFile) {
+                alert(`File video "${videoFile.name}" siap diupload.`);
+                // Tambahkan logika upload file jika ada backend
+            } else if (youtubeLink) {
+                alert(`Link video YouTube "${youtubeLink}" siap disimpan.`);
+                // Tambahkan logika penyimpanan link jika ada backend
+            } else {
+                alert('Silakan pilih file video atau masukkan link YouTube.');
+            }
+        }
+    </script>
+</body>
+
+</html>
